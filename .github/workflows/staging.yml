@@ -1,0 +1,37 @@
+# .github/workflows/staging.yml
+
+name: Python CI for Staging
+
+on:
+  push:
+    branches:
+      - staging  # Trigger the workflow only on pushes to the staging branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend-server  # Set the default working directory to /backend-server
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.12'  # Specify the Python version
+
+    - name: Upgrade pip
+      run: python -m pip install --upgrade pip
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        python -m unittest discover -s tests  # Discover and run all tests in the /tests directory
+        # Or run a specific test file
+        # python -m unittest tests/test_app.py
