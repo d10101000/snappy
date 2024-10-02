@@ -20,5 +20,11 @@ services:
       - ./website/.env
     volumes:
       - ./website:/app
+      - /app/node_modules 
     depends_on:
       - backend
+
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
